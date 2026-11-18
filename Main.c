@@ -149,6 +149,9 @@ int VPInterno(int priori, int perio){
 }
 
 int main(){
+
+    Equipamento *Hash[47];
+
     SetConsoleOutputCP(CP_UTF8);
 
     int loop = 1, seletor;
