@@ -2,13 +2,13 @@
 #define ARVOREBINARIA_H_INCLUDED
 
 typedef struct incidente{
-    int NIdem;
+    int NumIden;
     int CodEqui;
-    int Grav;
-}incidente;
+    int Grave;
+}Incidente;
 
 typedef struct NoArvore{
-    incidente info;
+    Incidente info;
     NoArv *esq;
     NoArv *dir;
 }NoArv;
@@ -24,17 +24,11 @@ Arv *CriaArv(){
     return aux;
 }
 
-NoArv *criar_no_abb (incidente dados);
+//Percorrer IN-ORDER
 
-NoArv *inserir_abb(NoArv *raiz, incidente dados);
 
-NoArv *pesquisar_abb(NoArv *raiz, int id_incidente);
 
-void listar_in_order(NoArv *raiz);
-
-NoArv *remover_abb(NoArv *raiz, int id_incidente);
-
-void liberar_arvore(NoArv *raiz);
+// Inserir incidente
 
 
 

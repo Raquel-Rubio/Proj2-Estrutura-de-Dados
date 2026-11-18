@@ -1,14 +1,16 @@
 #ifndef TABELAHASH_H_INCLUDED
 #define TABELAHASH_H_INCLUDED
 
+#define A (0,618)
+
 typedef struct noLista{
     int ID;
-    noLista *prox;
+    struct noLista *prox;
 }NoLista;
 
 typedef struct lista{
-    noLista *inicio;
-}Lista
+    NoLista *inicio;
+}Lista;
 
 typedef struct dadosEqui{
     int CodEqui;
@@ -18,15 +20,28 @@ typedef struct dadosEqui{
 
 typedef struct equipamento{
     DadosEqui dados;
-    equipamento *prox;
+    struct equipamento *prox;
 }Equipamento;
 
 
+void CalculaChave (int nome){
+    printf("RECEBIDO: %d\n", nome);
+    float roberto = (float) nome;
+    printf("ROBERTO = %.2f\n", roberto);
+    float outronome = (roberto*0,618555555);
+    printf("TESTANDO0: %.2f\n", outronome);
+    outronome = fmodf(outronome, 1);
+    printf("TESTANDO1: %.2f\n", outronome);
+    outronome = outronome * 47;
+    printf("TESTANDO2: %.2f\n", outronome);
+
+
+}
 //Função Hash - MULTIPLICAÇÃO
 
 //   47*((codEqui * 0,618)%1) -> achar o menor inteiro do valor obtido
 
-
+/*
 Lista* CriaLista(void){
      Lista *l;
      l=(Lista*)malloc(sizeof(Lista));
@@ -95,7 +110,7 @@ void inserirEqui (Equipamento *tabela[], int codigo, dadosEqui infos){
         aux2->prox = novo;
     }
 }
-
+*/
 
 
 #endif // TABELAHASH_H_INCLUDED
