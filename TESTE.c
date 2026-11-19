@@ -3,7 +3,7 @@
 #include<string.h>
 #include <conio.h>
 #include <ctype.h>
-#include <windows.h>
+#include<windows.h>
 #include<math.h>
 //#include "Lista.h"
 //#include "ArvoreBinaria.h"
@@ -19,7 +19,9 @@ int main(){
 
     int extra = VerificaID();
 
-    CalculaChave(extra);
+    int chave = CalculaChave(extra);
+
+    printf("RESULTADO FINAL: %d", chave);
 
 return 0;
 }

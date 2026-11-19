@@ -11,17 +11,6 @@
 
 
 
-
-int VerificaSoli(){
-    int verif;
-    do{
-        printf("\nInsira o Código de Solicitação:   ");
-        verif = PegarInteiros();
-        limpando_buffer();
-    }while(verif<1000 || verif>9999);
-    return verif;
-}
-
 int VerificaPriori(){
     int verif;
     do{
@@ -120,15 +109,22 @@ int main(){
                 break;
 
             case 1:
-                printf("\nINSERIR UMA SOLICITAÇÃO\n\n");
-                No *aux = (No*) malloc (sizeof(No));
+                printf("\nCadastrar Equipamento\n\n");
+
+                Equipamento *aux = (Equipamento*) malloc (sizeof(Equipamento));
                 int extra,i;
                 char h;
 
-                do{
+
+                //Adicionar verificação para evitar ter dois códigos iguais
+                extra = VerificaID();
+                int chave = CalculaChave(extra);
+
+
+                /*do{
                     extra = VerificaSoli();
                 }while(!DisponivelCod(L, extra));
-                aux->info.CodSoli = extra;
+                aux->info.CodSoli = extra;*/
 
 
                 printf("\nPor favor insira o Código do Equipamento (LLL000):   ");

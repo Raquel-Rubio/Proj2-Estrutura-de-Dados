@@ -1,7 +1,8 @@
 #ifndef TABELAHASH_H_INCLUDED
 #define TABELAHASH_H_INCLUDED
 
-#define A (0,618)
+#define A (0.618)
+#define M 47
 
 typedef struct noLista{
     int ID;
@@ -23,25 +24,31 @@ typedef struct equipamento{
     struct equipamento *prox;
 }Equipamento;
 
-
-void CalculaChave (int nome){
-    printf("RECEBIDO: %d\n", nome);
-    float roberto = (float) nome;
-    printf("ROBERTO = %.2f\n", roberto);
-    float outronome = (roberto*0,618555555);
-    printf("TESTANDO0: %.2f\n", outronome);
-    outronome = fmodf(outronome, 1);
-    printf("TESTANDO1: %.2f\n", outronome);
-    outronome = outronome * 47;
-    printf("TESTANDO2: %.2f\n", outronome);
-
-
-}
 //Função Hash - MULTIPLICAÇÃO
 
 //   47*((codEqui * 0,618)%1) -> achar o menor inteiro do valor obtido
+int CalculaChave (int nome){
 
-/*
+    float outronome = (nome*0.618);
+    outronome = fmodf(outronome, 1);
+    outronome = outronome * 47;
+
+    return (int)outronome;
+}
+
+Equipamento* CriaTabela(){
+    Equipamento *E = (Equipamento*)malloc(M * sizeof(Equipamento));
+    for(int i=0; i<M; i++){
+        E[i].dados.CodEqui=0;
+        E[i].dados.incidentesLista = NULL;
+        E[i].dados.NomeEqui= '\0';
+
+
+        E[i].prox = NULL;
+    }
+    return E;
+}
+
 Lista* CriaLista(void){
      Lista *l;
      l=(Lista*)malloc(sizeof(Lista));
@@ -51,7 +58,7 @@ Lista* CriaLista(void){
 
 Lista* liberaLista (Lista* l)
 {
-    No *aux;
+    NoLista *aux;
     while(l->inicio!=NULL){
         aux = l->inicio;
         l->inicio = l->inicio->prox;
@@ -83,34 +90,41 @@ void inserir (Lista *L, int num){
     }
 }
 
-void inserirEqui (Equipamento *tabela[], int codigo, dadosEqui infos){
-    equipamento *novo = (equipamento*)malloc(sizeof(equipamento));
+void inserirEqui (Equipamento *tabela[], int codigo, DadosEqui infos){
+    Equipamento *novo = (Equipamento*)malloc(sizeof(Equipamento));
     novo->dados = infos;
     novo->prox = NULL;
 
-    equipamento *aux;
-    equipamento *aux2=NULL;
+    Equipamento *aux = tabela[codigo];
+    Equipamento *aux2=NULL;
 
-    if (tabela[codigo] == NULL){
-        //coloca
-
-    }
-
-    aux = E ->inicio;
-    while(aux!=NULL){
+    while(aux != NULL){ //nao tenho certeza sobre ess comparação, tem que ver se isso realmente funciona
         aux2 = aux;
         aux = aux->prox;
     }
 
     novo->prox = aux;
     if(aux2 == NULL){
-        E->inicio = novo;
+        tabela[codigo] = novo;
     }
     else{
         aux2->prox = novo;
     }
 }
-*/
 
+
+
+int DisponivelCod(Equipamento *E[], int codigo, int chave){
+
+    Equipamento *aux = E[chave];
+    while(aux != NULL){
+        if(aux->dados.CodEqui == codigo){
+            printf("\nEsse código de equipamento ja está em uso\n");
+            return 0;
+        }
+        aux = aux->prox;
+    }
+    return 1;
+}
 
 #endif // TABELAHASH_H_INCLUDED
