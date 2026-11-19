@@ -82,7 +82,7 @@ int main(){
     int loop = 1, seletor;
 
     //Lista *L = CriaLista();
-    Equipamento *Hash[47];
+   // Equipamento *Hash[47]; Será criado o vetor dentro da função CriarTabela
 
     while(loop != 0) {
         printf("\n\tSistema de Cadastro de Manutenção\n\n");
