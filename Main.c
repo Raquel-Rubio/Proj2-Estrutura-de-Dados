@@ -5,83 +5,11 @@
 #include <ctype.h>
 #include<windows.h>
 #include "Lista.h"
+#include "ArvoreBinária.h"
+#include "TabelaHash.h"
+#include "Extra.h"
 
-void limpando_buffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
 
-int PegarInteiros(){
-    int PI, voltaInteiros=0;
-    while(voltaInteiros==0){
-        if(scanf(" %d", &PI)==0){
-                limpando_buffer();
-                printf("\nPor favor insira um valor válido:   ");
-        }
-        else{
-            voltaInteiros=1;
-            return PI;
-        }
-    }
-}
-
-char PegarCaracter(int i){
-    int voltaChar=0;
-    char c;
-    if(i==0){
-        while(voltaChar == 0){
-            c = getch();
-            if(isalpha(c)!= 0){
-                printf("%c", c);
-                voltaChar = 1;
-                return c;
-            }
-            if(c==13){
-                return '\0';
-            }
-            printf("\nÉ necessário que seja uma letra:   ");
-        }
-    }
-    else{
-        while(voltaChar == 0){
-            c = getch();
-            if(isalpha(c)!= 0 || c==32){
-                printf("%c", c);
-                voltaChar = 1;
-                return c;
-            }
-            if(c==13){
-                return '\0';
-            }
-            printf("\nÉ necessário que seja uma letra:   ");
-        }
-    }
-}
-
-char PegarUMInteiro(){
-    int voltaUMInt=0;
-    char c;
-    while(voltaUMInt == 0){
-        c = getch();
-        if(isdigit(c)!= 0){
-            voltaUMInt = 1;
-            printf("%c", c);
-            return c;
-        }
-        printf("\nÉ necessário que seja um número:   ");
-    }
-
-}
-
-int VerificaSoli(){
-    int verif;
-    do{
-        printf("\nInsira o Código de Solicitação:   ");
-        verif = PegarInteiros();
-        limpando_buffer();
-    }while(verif<1000 || verif>9999);
-    return verif;
-}
 
 int VerificaPriori(){
     int verif;
@@ -149,14 +77,12 @@ int VPInterno(int priori, int perio){
 }
 
 int main(){
-
-    Equipamento *Hash[47];
-
     SetConsoleOutputCP(CP_UTF8);
 
     int loop = 1, seletor;
-    Lista *L = CriaLista();
 
+    //Lista *L = CriaLista();
+   // Equipamento *Hash[47]; Será criado o vetor dentro da função CriarTabela
 
     while(loop != 0) {
         printf("\n\tSistema de Cadastro de Manutenção\n\n");
@@ -183,15 +109,22 @@ int main(){
                 break;
 
             case 1:
-                printf("\nINSERIR UMA SOLICITAÇÃO\n\n");
-                No *aux = (No*) malloc (sizeof(No));
+                printf("\nCadastrar Equipamento\n\n");
+
+                Equipamento *aux = (Equipamento*) malloc (sizeof(Equipamento));
                 int extra,i;
                 char h;
 
-                do{
+
+                //Adicionar verificação para evitar ter dois códigos iguais
+                extra = VerificaID();
+                int chave = CalculaChave(extra);
+
+
+                /*do{
                     extra = VerificaSoli();
                 }while(!DisponivelCod(L, extra));
-                aux->info.CodSoli = extra;
+                aux->info.CodSoli = extra;*/
 
 
                 printf("\nPor favor insira o Código do Equipamento (LLL000):   ");
