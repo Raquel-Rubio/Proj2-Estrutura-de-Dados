@@ -4,8 +4,9 @@
 #include <conio.h>
 #include <ctype.h>
 #include<windows.h>
-#include "Lista.h"
-#include "ArvoreBinária.h"
+#include<math.h>
+//#include "Lista.h"
+//#include "ArvoreBinária.h"
 #include "TabelaHash.h"
 #include "Extra.h"
 
@@ -82,7 +83,7 @@ int main(){
     int loop = 1, seletor;
 
     //Lista *L = CriaLista();
-   // Equipamento *Hash[47]; Será criado o vetor dentro da função CriarTabela
+    Equipamento *Hash[47] = {NULL};
 
     while(loop != 0) {
         printf("\n\tSistema de Cadastro de Manutenção\n\n");
@@ -112,20 +113,22 @@ int main(){
                 printf("\nCadastrar Equipamento\n\n");
 
                 Equipamento *aux = (Equipamento*) malloc (sizeof(Equipamento));
-                int extra,i;
+                int extra,chave, i;
                 char h;
 
 
                 //Adicionar verificação para evitar ter dois códigos iguais
+                do{
                 extra = VerificaID();
-                int chave = CalculaChave(extra);
+                chave = CalculaChave(extra);
+                }while(!Existe(Hash[chave], extra));
 
-
-                /*do{
+                /*
+                do{
                     extra = VerificaSoli();
                 }while(!DisponivelCod(L, extra));
-                aux->info.CodSoli = extra;*/
-
+                aux->info.CodSoli = extra;
+                */
 
                 printf("\nPor favor insira o Código do Equipamento (LLL000):   ");
                 for(i=0; i<3; i++){
@@ -233,5 +236,6 @@ int main(){
             }
 
     }
+
     return 0;
 }

@@ -15,13 +15,27 @@ int main(){
 
     printf("\n\nARQUIVO DE TESTES\n\n");
 
+    int extra, chave;
+    Equipamento *Hash[47] = {NULL};
     //limpando_buffer();
 
-    int extra = VerificaID();
+        extra = VerificaID();
+        chave = CalculaChave(extra);
 
-    int chave = CalculaChave(extra);
+    printf("\nA chave foi: %d\n ", chave);
 
-    printf("RESULTADO FINAL: %d", chave);
+    inserirEquiTESTE(Hash[chave], extra);
+    ImprimeEqui(Hash[chave]->dados);
+
+    printf("\nFez isso??\n");
+
+    int chave2;
+        extra = VerificaID();
+        chave2 = CalculaChave(extra);
+        printf("\nFez nova chave?? %d", chave2);
+
+
+    liberaTabela(Hash);
 
 return 0;
 }
