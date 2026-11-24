@@ -24,7 +24,7 @@ typedef struct equipamento{
     struct equipamento *prox;
 }Equipamento;
 
-//Função Hash - MULTIPLICAÇÃO
+//FunÃ§Ã£o Hash - MULTIPLICAÃ‡ÃƒO
 
 //   47*((codEqui * 0,618)%1) -> achar o menor inteiro do valor obtido
 int CalculaChave (int nome){
@@ -64,7 +64,7 @@ void liberaTabela (Equipamento* E[]){ //livera tabela e a lista de incidentes de
             free(aux);
         }
     }
-    //free(l); da função original mas não creio ser necessário pq a tabela em si nao esta alocada
+    //free(l); da funÃ§Ã£o original mas nÃ£o creio ser necessÃ¡rio pq a tabela em si nao esta alocada
 }
 
 void inserir (Lista *L, int num){
@@ -95,34 +95,36 @@ void inserirEqui (Equipamento *tabela[], int codigo, DadosEqui infos){
     novo->dados = infos;
     novo->prox = NULL;
 
-    if(tabela[codigo] == NULL){ //se a posição estiver tiver vazia vai direto
+    if(tabela[codigo] == NULL){ //se a posiÃ§Ã£o estiver tiver vazia vai direto
         tabela[codigo] = novo;
+        printf("\primeira vez posiÃ§Ã£o tabela %d equipamento = %d",codigo,tabela[codigo]->dados.codEqui);
     }
     else{ //se nao cria auxiliares para achar lugar correto
         Equipamento *aux = tabela[codigo];
-        Equipamento *aux2 = NULL;
+        //Equipamento *aux2 = NULL;
 
-        while(aux != NULL){
-            aux2 = aux;
+        while(aux->prox!= NULL){
+            //aux2 = aux;
             aux = aux->prox;
         }
 
-        novo->prox = aux;
-        aux2->prox = novo;
+       /* novo->prox = aux;
+        aux2->prox = novo;*/
+        aux->prox=novo;
     }
 }
 */
 
-/* VERIFICAÇÃO NÃO ESTA FUNCIONANDO
+/* VERIFICAÃ‡ÃƒO NÃƒO ESTA FUNCIONANDO
 int Existe (Equipamento *E[], int chave, int cod){
 
     Equipamento *aux = E[chave];
 
-    printf("\nChegou até aqui??\n");
+    printf("\nChegou atÃ© aqui??\n");
     while(aux != NULL){
         printf("\nEntrou no loop?\n\tTentando Algo %d", aux->dados.CodEqui);
         if(aux->dados.CodEqui == cod){
-            printf("\nEsse código de equipamento ja está em uso\n");
+            printf("\nEsse cÃ³digo de equipamento ja estÃ¡ em uso\n");
             return 0;
         }
         aux = aux->prox;
@@ -137,7 +139,7 @@ void inserirEquiTESTE (Equipamento *Posi, int infos){
     novo->dados.CodEqui = infos;
     novo->prox = NULL;
     printf("\nEntrou em insere alocou e colocou dados em novo\n");
-    if(Posi == NULL){ //se a posição estiver tiver vazia vai direto
+    if(Posi == NULL){ //se a posiÃ§Ã£o estiver tiver vazia vai direto
        Posi = novo;
         printf("\nDentro do posi==null achou o lugar como o primeiro lugar \n");
     }else{ //se nao cria auxiliares para achar lugar correto
@@ -161,7 +163,7 @@ void ImprimeLista(Lista *l){
     NoLista* aux;
     aux = l->inicio;
     if (aux==NULL){
-        printf("\nA lista está vazia\n");
+        printf("\nA lista estÃ¡ vazia\n");
     }else{
         while(aux != NULL){
             printf("l->id do incidente do equipamento: %d", aux->ID);
@@ -172,7 +174,7 @@ void ImprimeLista(Lista *l){
 
 void ImprimeEqui (DadosEqui infos){
  printf("\n\nImprime dados do Equipamento");
- printf("Código do Equipamento: %d", infos.CodEqui);
+ printf("CÃ³digo do Equipamento: %d", infos.CodEqui);
 
 }
 
