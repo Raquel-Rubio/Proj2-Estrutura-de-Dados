@@ -89,4 +89,14 @@ int VerificaNumIdem(){
     }while(verif<10 || verif >99);
     return verif;
 }
+
+int VerificaPriori(){
+    int verif;
+    do{
+        printf("\n\nPor favor insira o nível de Prioridade (1 a 3):   ");
+        verif = PegarInteiros();
+        limpando_buffer();
+    }while(verif<1 || verif>3);
+    return verif;
+}
 #endif // EXTRA_H_INCLUDED

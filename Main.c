@@ -6,7 +6,7 @@
 #include<windows.h>
 #include<math.h>
 //#include "Lista.h"
-//#include "ArvoreBinária.h"
+#include "ArvoreBinaria.h"
 #include "TabelaHash.h"
 #include "Extra.h"
 
@@ -49,11 +49,11 @@ int main(){
                 int extra,chave, i;
                 char h;
 
-
                 do{
                 extra = VerificaID();
                 chave = CalculaChave(extra);
                 }while(!ExisteEqui(Hash, chave, extra));
+                aux->dados.CodEqui = extra;
 
                 printf("\nPor favor insira o Nome do Equipamento (LLL000):   ");
                 for(i=0; i<10; ){
@@ -61,11 +61,11 @@ int main(){
                     if(h=='\0'){
                         break;
                     }
-                    aux->info.NomeEqui[i] = h;
+                    aux->dados.NomeEqui[i] = h;
                     i++;
                 }
                 for(; i<11; i++){
-                    aux->info.NomeEqui[i] = '\0';
+                    aux->dados.NomeEqui[i] = '\0';
                 }
                 printf("\n\tNome do Equipamento informado: %s\n", aux->dados.NomeEqui);
 
@@ -78,75 +78,63 @@ int main(){
 
             case 2:
                 printf("\nRegistrar Incidentes\n");
-                int temporario;
+                int temporario, temp2, chave2;
+                NoArv *aux2 = (NoArv*)malloc(sizeof(NoArv));
 
-                printf("\nPor favor insira o Código do Equipamento relacionado ao Insidente")
+                if(HashVazia(Hash)){
+                    printf("Não existem Equipamentos registrados nesse sistema");
+                    break;
+                }
+                printf("\nÉ necessário o Código do Equipamento relacionado ao Insidente");
                 do{
                 temporario = VerificaID();
-                chave = CalculaChave(extra);
-                }while(!ExisteEqui(Hash, chave, extra));
-                temporario = VerificaNumIdem();
+                chave2 = CalculaChave(extra);
+                }while(ExisteEqui(Hash, chave2, extra));
+                aux2->info.CodEqui = temporario;
 
+                aux2->info.NumIden = VerificaNumIdem();
 
+                aux2->info.Grave = VerificaPriori();
 
+                //colocar inserir aqui
+                //colocar impromir aqui
+
+                free(aux2);
 
                 break;
 
             case 3:
-                int encon = VerificaSoli();
+                printf("\nConsultar um Equipamento");
 
-                AchaItemNo(L, encon);
+                int cod, chave3;
+                if(HashVazia(Hash)){
+                    printf("Não existem Equipamentos registrados nesse sistema");
+                    break;
+                }
+                printf("\nÉ necessário o Código do Equipamento relacionado ao Insidente");
+                do{
+                cod = VerificaID();
+                chave3 = CalculaChave(extra);
+                }while(ExisteEqui(Hash, chave3, extra));
 
+                //Arrumar a impressão para consultar a arvore ISSO NAO TA PRONTOOOO
+                system("pause");
                 break;
 
             case 4:
-                int Mprio, Mperi, mudar;
-                printf("\nAlterar Prioridade e/ou Periodo:");
-                printf("\n\t1-Mudar apenas a Prioridade \n\t2-Mudar apenas o Periodo\n\t3-Mudar Prioridade e Periodo\n\n\t");
-                do{
-                    mudar = PegarInteiros();
-                }while(mudar<1 || mudar>3);
+               printf("\nImprimir todos os incidentes em ordem crescente");
 
-                int altera = VerificaSoli();
-
-                int Q = AchaPrioPeri(mudar, L, altera);
-                if(Q == 0){
-                    break;
-                }
-                else{
-                    switch(mudar){
-                        case 1:
-                            do{
-                                Mprio = VerificaPriori();
-                            }while(!VPInterno(Mprio, Q));
-                            Mperi = Q;
-                            break;
-
-                        case 2:
-                            Mperi = VerificaPeriodo(Q);
-                            Mprio = Q;
-                            break;
-
-                        case 3:
-                            Mprio = VerificaPriori();
-                            Mperi = VerificaPeriodo(Mprio);
-                            break;
-                    }
-
-                }
-
-                Modifica(L, altera, Mprio, Mperi);
-                break;
+               system("pause");
+               break;
 
             case 5:
-                OrdemManutencao(L);
-                printf("\n");
+                printf("\nApagar um incidente");
                 system("pause");
                 break;
 
             case 6:
-                ImprimeLista(L);
-                printf("\n");
+
+
                 system("pause");
                 break;
             }
