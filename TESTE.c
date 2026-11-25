@@ -58,7 +58,7 @@ int main(){
     chave2 = CalculaChave(extra);
 
     teste2.CodEqui = extra;
-    teste2.IL =NULL;
+    teste2.IL = CriaLista();
     teste2.NomeEqui[0] = '\0';
         printf("\nFez nova chave?? %d", chave2);
 

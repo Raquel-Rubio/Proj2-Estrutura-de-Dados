@@ -99,25 +99,23 @@ void inserirEqui (Equipamento *tabela[], int codigo, DadosEqui infos){
         tabela[codigo] = novo;
         printf("\nprimeira vez posição tabela %d equipamento = %d",codigo,tabela[codigo]->dados.CodEqui);
     }
-    else{ 
+    else{ //se nao cria auxiliares para achar lugar correto
         Equipamento *aux = tabela[codigo];
 
         printf("\nEntrou no else do inserirEqui");
         while(aux->prox!= NULL){
-
             aux = aux->prox;
             printf("\nAndou pra frente na lista encadeada do inserir equipamento");
         }
-    aux->prox = novo;
     }
+    printf("\nSaindo do inserirEqui");
 }
 
 void buscaEqui(Equipamento *tabela, int cod){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
 }
 
 
-/* VERIFICA��O N�O ESTA FUNCIONANDO
 int Existe (Equipamento *E[], int chave, int cod){
 
     Equipamento *aux = E[chave];
@@ -133,7 +131,7 @@ int Existe (Equipamento *E[], int chave, int cod){
     }
     printf("\nChegou no final do existe\n");
     return 1;
-}*/
+}
 
 
 void ImprimeLista(Lista *l){
@@ -150,11 +148,21 @@ void ImprimeLista(Lista *l){
     }
 }
 
-void ImprimeEqui (DadosEqui infos){
- printf("\n\nImprime dados do Equipamento");
- printf("\nCódigo do Equipamento: %d", infos.CodEqui);
+// void ImprimeEqui (DadosEqui infos){
+ 
+//  printf("\nCódigo do Equipamento: %d", infos.CodEqui);
+//  printf("\nCódigo do Equipamento: %d", infos.CodEqui);
 
+// }
+
+
+void ImprimeEqui(DadosEqui infos){
+    printf("\n\nImprime dados do Equipamento");
+    printf("\nCódigo do Equipamento: %d", infos.CodEqui);
+    printf("\nNome do Equipamento: %s", infos.NomeEqui);
+    printf("\nLista de IDs de Incidentes:");
+    Lista *imprimir = infos.IL; 
+    ImprimeLista(imprimir);
 }
-
 
 #endif // TABELAHASH_H_INCLUDED
