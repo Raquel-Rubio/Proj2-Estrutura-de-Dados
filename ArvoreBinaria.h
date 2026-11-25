@@ -6,13 +6,13 @@ typedef struct incidente{
     int Grave;
 }Incidente;
 
-typedef struct NoArvore{
+typedef struct noArvore{
     Incidente info;
-    struct NoArv *esq;
-    struct NoArv *dir;
+    struct noArvore *esq;
+    struct noArvore *dir;
 }NoArv;
 
-typedef struct Arv{
+typedef struct arvore{
     NoArv *raiz;
 }Arv;
 
@@ -38,13 +38,9 @@ void ImprimirArv(NoArv *no) {
 */
 
 // Inserir incidente
-NoArv *InsereInci(Arv *Arvore, Incidente incidente){
-    Arvore->raiz = aux_insere(Arvore->raiz, incidente);
-}
-
-NoArv Aux_insere(NoArv *no, Incidente incidente){
+NoArv* Aux_insere(NoArv *no, Incidente incidente){
     int flag;
-    NoArv Pai;
+    NoArv *Pai;
     NoArv *novo = (NoArv*)malloc(sizeof(NoArv));
     novo->info = incidente;
     novo->dir = NULL;
@@ -56,13 +52,18 @@ NoArv Aux_insere(NoArv *no, Incidente incidente){
         flag = 0;
         Pai = no;
         while (flag==0){
-            if(Pai->incidente.NumIdem < incidente.NumIden){
-                if(Pai->incidente == NULL){
+            if(Pai->info.NumIden < incidente.NumIden){
+                if(Pai->dir == NULL){
                     Pai->dir = novo;
                     flag=1;
                 }
                 else{
-                    if(Pai->incidente.NumIdem < incidente.NumIden){
+                    Pai = Pai->dir;
+                }
+            }
+            else{
+                if(Pai->info.NumIden > incidente.NumIden){
+                    if(Pai->esq ==NULL){
                         Pai->esq = novo;
                         flag = 1;
                     }
@@ -79,6 +80,10 @@ NoArv Aux_insere(NoArv *no, Incidente incidente){
         }
     }
     return no;
+}
+
+NoArv *InsereInci(Arv *a, Incidente incidente){
+        a->raiz = Aux_insere(a->raiz, incidente);
 }
 
 #endif // ARVOREBINARIA_H_INCLUDED

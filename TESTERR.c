@@ -82,7 +82,7 @@ int main(){
 
     int extra, chave;
     Equipamento *Hash[47] = {NULL};
-    Arv *Arvore = NULL;
+    Arv* Arvoreee = NULL;
     //limpando_buffer();
 
         extra = VerificaID();
@@ -138,8 +138,8 @@ int main(){
     inci.Grave = 1;
     inci.NumIden = 12;
 
-    InsereInci(Arvore, inci);
-    ImprimirArv(inci);
+    InsereInci(Arvoreee, inci);
+    //ImprimirArv(inci);
 
     liberaTabela(Hash);
 
