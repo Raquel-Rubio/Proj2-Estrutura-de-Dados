@@ -38,8 +38,14 @@ NoArv *criar_no_abb(Incidente dados) {
     return novo;
 }
 
-// Percorrer IN-ORDER
-
+void percorrer_in_order(NoArv *no) {
+    if (no != NULL) {
+        percorrer_in_order(no->esq);
+        printf("ID: %d | Equipamento: %d | Gravidade: %d\n",
+               no->info.NumIden, no->info.CodEqui, no->info.Grave);
+        percorrer_in_order(no->dir);
+    }
+}
 
 // Inserir incidente
 
