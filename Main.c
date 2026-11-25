@@ -10,73 +10,6 @@
 #include "TabelaHash.h"
 #include "Extra.h"
 
-
-
-int VerificaPriori(){
-    int verif;
-    do{
-        printf("\n\nPor favor insira o nível de Prioridade (1 a 3):   ");
-        verif = PegarInteiros();
-        limpando_buffer();
-    }while(verif<1 || verif>3);
-    return verif;
-}
-
-int VerificaPeriodo(int priori){
-    int verif;
-    if(priori==3){
-        do{
-            printf("\nPor favor insira o Período (1 a 20):   ");
-            verif = PegarInteiros();
-        }while(verif < 1 || verif > 20);
-
-        return verif;
-
-    }else{
-        if(priori==2){
-            do{
-                printf("\nPor favor insira o Período (1 a 15):   ");
-                verif = PegarInteiros();
-            }while(verif < 1 || verif > 15);
-
-            return verif;
-
-        }else{
-            do{
-                printf("\nPor favor insira o Período (1 a 7):   ");
-                verif = PegarInteiros();
-            }while(verif < 1 || verif > 7);
-
-          return verif;
-
-        }
-    }
-}
-
-int VPInterno(int priori, int perio){
-    if(priori==3){
-        if(perio < 1 || perio > 20){
-            printf("\nNova prioridade não condiz com periodo já existente\n");
-            return 0;
-        }
-        return 1;
-    }else{
-        if(priori==2){
-            if(perio < 1 || perio > 15){
-                printf("\nNova prioridade não condiz com periodo já existente\n");
-                return 0;
-            }
-            return 1;
-        }else{
-            if(perio < 1 || perio > 7){
-                printf("\nNova prioridade não condiz com periodo já existente\n");
-                return 0;
-            }
-            return 1;
-        }
-    }
-}
-
 int main(){
     SetConsoleOutputCP(CP_UTF8);
 
@@ -105,7 +38,7 @@ int main(){
 
             case 0:
                 printf("\n\n\t\tObrigado por usar nosso sistema\n\n");
-                liberaLista(L);
+                liberaTabela(Hash);
                 loop = 0;
                 break;
 
@@ -117,33 +50,13 @@ int main(){
                 char h;
 
 
-                //Adicionar verificação para evitar ter dois códigos iguais
                 do{
                 extra = VerificaID();
                 chave = CalculaChave(extra);
-                }while(!Existe(Hash[chave], extra));
+                }while(!ExisteEqui(Hash, chave, extra));
 
-                /*
-                do{
-                    extra = VerificaSoli();
-                }while(!DisponivelCod(L, extra));
-                aux->info.CodSoli = extra;
-                */
-
-                printf("\nPor favor insira o Código do Equipamento (LLL000):   ");
-                for(i=0; i<3; i++){
-                    h = PegarCaracter(0);
-                    aux->info.CodEqui[i] = h;
-                }
-                for(i=3; i<6; i++){
-                    h = PegarUMInteiro();
-                    aux->info.CodEqui[i] = h;
-                }
-                aux->info.CodEqui[6] = '\0';
-                printf("\n\tCódigo de Equipamento informado: %s\n", aux->info.CodEqui);
-
-                printf("\nPor favor insira o Nome do Equipamento:   ");
-                for(i=0; i<20; ){
+                printf("\nPor favor insira o Nome do Equipamento (LLL000):   ");
+                for(i=0; i<10; ){
                     h = PegarCaracter(1);
                     if(h=='\0'){
                         break;
@@ -151,28 +64,31 @@ int main(){
                     aux->info.NomeEqui[i] = h;
                     i++;
                 }
-                for(; i<21; i++){
+                for(; i<11; i++){
                     aux->info.NomeEqui[i] = '\0';
                 }
-                printf("\n\tNome do Equipamento informado: %s\n", aux->info.NomeEqui);
+                printf("\n\tNome do Equipamento informado: %s\n", aux->dados.NomeEqui);
 
-                aux->info.Prioridade = VerificaPriori();
+                aux->dados.IL = CriaLista();
 
-
-                aux->info.Periodo = VerificaPeriodo(aux->info.Prioridade);
-
-
-                inserir(L, aux->info);
-                ImprimeItem(aux->info);
+                inserirEqui(Hash, chave, aux->dados);
+                ImprimeEqui(Hash, chave, extra);
                 free(aux);
                 break;
 
             case 2:
-                printf("\nRemover uma Solicitação de Manutenção");
-                int rmv = VerificaSoli();
-                if(AchaItemNo(L, rmv)){
-                    RemoverSoli(L, rmv);
-                }
+                printf("\nRegistrar Incidentes\n");
+                int temporario;
+
+                printf("\nPor favor insira o Código do Equipamento relacionado ao Insidente")
+                do{
+                temporario = VerificaID();
+                chave = CalculaChave(extra);
+                }while(!ExisteEqui(Hash, chave, extra));
+                temporario = VerificaNumIdem();
+
+
+
 
                 break;
 

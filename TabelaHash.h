@@ -36,7 +36,7 @@ int CalculaChave (int nome){
     return (int)outronome;
 }
 
-Lista* CriaLista(void){
+Lista* CriaLista(){
      Lista *l;
      l=(Lista*)malloc(sizeof(Lista));
      l->inicio = NULL;
@@ -90,45 +90,33 @@ void inserir (Lista *L, int num){
 }
 
 
-void inserirEqui (Equipamento *tabela[], int codigo, DadosEqui infos){
+void inserirEqui (Equipamento *tabela[], int chave, DadosEqui infos){
     Equipamento *novo = (Equipamento*)malloc(sizeof(Equipamento));
     novo->dados = infos;
+    novo->dados.IL = CriaLista();
     novo->prox = NULL;
 
-    if(tabela[codigo] == NULL){ //se a posição estiver tiver vazia vai direto
-        tabela[codigo] = novo;
-        printf("\nprimeira vez posição tabela %d equipamento = %d",codigo,tabela[codigo]->dados.CodEqui);
+    if(tabela[chave] == NULL){ //se a posição estiver tiver vazia vai direto
+        tabela[chave] = novo;
     }
     else{ //se nao cria auxiliares para achar lugar correto
-        Equipamento *aux = tabela[codigo];
-
-        printf("\nEntrou no else do inserirEqui");
+        Equipamento *aux = tabela[chave];
         while(aux->prox!= NULL){
-
             aux = aux->prox;
-            printf("\nAndou pra frente na lista encadeada do inserir equipamento");
         }
-
         aux->prox=novo;
     }
 }
 
-
-// VERIFICAÇÃO NÃO ESTA FUNCIONANDO
-int Existe (Equipamento *E[], int chave, int cod){
-
+int ExisteEqui (Equipamento *E[], int chave, int cod){
     Equipamento *aux = E[chave];
-
-    printf("\nChegou até aqui??\n");
     while(aux != NULL){
-        printf("\nEntrou no loop?\n\tTentando Algo %d", aux->dados.CodEqui);
         if(aux->dados.CodEqui == cod){
             printf("\nEsse código de equipamento ja está em uso\n");
             return 0;
         }
         aux = aux->prox;
     }
-    printf("\nChegou no final do existe\n");
     return 1;
 }
 
@@ -138,6 +126,7 @@ void ImprimeLista(Lista *l){
     aux = l->inicio;
     if (aux==NULL){
         printf("\nA lista está vazia\n");
+
     }else{
         while(aux != NULL){
             printf("l->id do incidente do equipamento: %d", aux->ID);
@@ -146,11 +135,20 @@ void ImprimeLista(Lista *l){
     }
 }
 
-void ImprimeEqui (DadosEqui infos){
+void ImprimePorCod (DadosEqui infos){
  printf("\n\nImprime dados do Equipamento");
  printf("\nCódigo do Equipamento: %d", infos.CodEqui);
-
+ printf("\nNome do Equipamento: %s", infos.NomeEqui);
+ ImprimeLista(infos.IL);
 }
 
-
+void ImprimeEqui (Equipamento *E[], int chave, int cod){
+    Equipamento *aux = E[chave];
+    while(aux != NULL){
+        if(aux->dados.CodEqui == cod){
+            ImprimePorCod(aux->dados);
+        }
+        aux = aux->prox;
+    }
+}
 #endif // TABELAHASH_H_INCLUDED
