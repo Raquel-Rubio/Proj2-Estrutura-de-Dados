@@ -8,13 +8,15 @@ typedef struct incidente{
 
 typedef struct NoArvore{
     Incidente info;
-    NoArv *esq;
-    NoArv *dir;
+    struct NoArv *esq;
+    struct NoArv *dir;
 }NoArv;
 
 typedef struct Arv{
     NoArv *raiz;
 }Arv;
+
+
 
 Arv *CriaArv(){
     Arv *aux;
@@ -24,12 +26,20 @@ Arv *CriaArv(){
 }
 
 //Percorrer IN-ORDER
-
-
+/*
+void ImprimirArv(NoArv *no) {
+    if (no != NULL) {
+        ImprimirArv(no->esq);
+        printf("ID: %d | Equipamento: %d | Gravidade: %d\n",
+               no->info.NumIden, no->info.CodEqui, no->info.Grave);
+        ImprimirArv(no->dir);
+    }
+}
+*/
 
 // Inserir incidente
-void *InsereInci(Arv *Arvore, Incidente incidente){
-    Arvore->raiz = Aux_insere(Arvore->raiz, incidente);
+NoArv *InsereInci(Arv *Arvore, Incidente incidente){
+    Arvore->raiz = aux_insere(Arvore->raiz, incidente);
 }
 
 NoArv Aux_insere(NoArv *no, Incidente incidente){
