@@ -24,7 +24,7 @@ int main(){
 
     printf("\nA chave foi: %d\n ", chave);
 
-    inserirEquiTESTE(Hash[chave], extra);
+    inserirEqui(Hash, chave, extra);
     ImprimeEqui(Hash[chave]->dados);
 
     printf("\nFez isso??\n");
