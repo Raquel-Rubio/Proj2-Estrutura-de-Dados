@@ -20,6 +20,16 @@ int PegarInteiros(){
     }
 }
 
+int VerificaGrav(){
+    int verif;
+    do{
+        printf("\nInsira a Gravidade do Incidente:   ");
+        verif = PegarInteiros();
+        limpando_buffer();
+    }while(verif<1 || verif>3);
+    return verif;
+}
+
 
 char PegarCaracter(){ //aceita letras e numeros, na teoria
     int voltaChar=0;

@@ -5,8 +5,7 @@
 #include <ctype.h>
 #include<windows.h>
 #include<math.h>
-//#include "Lista.h"
-//#include "ArvoreBinária.h"
+#include "ArvoreBinaria.h"
 #include "TabelaHash.h"
 #include "Extra.h"
 
@@ -17,6 +16,7 @@ int main(){
 
     //Lista *L = CriaLista();
     Equipamento *Hash[47] = {NULL};
+    Arv* Arvore = CriaArv();
 
     while(loop != 0) {
         printf("\n\tSistema de Cadastro de Manutenção\n\n");
@@ -38,6 +38,7 @@ int main(){
 
             case 0:
                 printf("\n\n\t\tObrigado por usar nosso sistema\n\n");
+                //liberaArv(Arvore);
                 liberaTabela(Hash);
                 loop = 0;
                 break;
@@ -45,7 +46,7 @@ int main(){
             case 1:
                 printf("\nCadastrar Equipamento\n\n");
 
-                Equipamento *aux = (Equipamento*) malloc (sizeof(Equipamento));
+                Equipamento *aux = (Equipamento*)malloc(sizeof(Equipamento));
                 int extra,chave, i;
                 char h;
 
@@ -55,7 +56,7 @@ int main(){
                 chave = CalculaChave(extra);
                 }while(!ExisteEqui(Hash, chave, extra));
 
-                printf("\nPor favor insira o Nome do Equipamento (LLL000):   ");
+                printf("\nPor favor, insira o Nome do Equipamento:   ");
                 for(i=0; i<10; ){
                     h = PegarCaracter(1);
                     if(h=='\0'){

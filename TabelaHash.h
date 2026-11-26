@@ -56,7 +56,7 @@ void liberaLista (Lista* l)
 
 void liberaTabela (Equipamento* E[]){ //livera tabela e a lista de incidentes dentro de cada equi
     Equipamento *aux;
-    for(int i=0; i>M; i++){
+    for(int i=0; i<M; i++){
         while(E[i]!=NULL){
             aux = E[i];
             liberaLista(E[i]->dados.IL);
@@ -151,4 +151,7 @@ void ImprimeEqui (Equipamento *E[], int chave, int cod){
         aux = aux->prox;
     }
 }
+
+//int RemovEquiHash (equipamento Hash, int numID){
+//}
 #endif // TABELAHASH_H_INCLUDED
