@@ -14,9 +14,30 @@ int main(){
 
     printf("\n\nARQUIVO DE TESTES\n\n");
 
-    int extra, chave;
     Equipamento *Hash[47] = {NULL};
     Arv* Arvoreee = CriaArv();
+
+    DadosEqui a = {1011, "PC", NULL};
+    DadosEqui b = {1100, "Monitor", NULL};
+    DadosEqui c = {3456, "Mouse", NULL};
+    DadosEqui d = {1456, "Teclado", NULL};
+
+    inserirEqui(Hash, CalculaChave(1011), a);
+    inserirEqui(Hash, CalculaChave(1100), b);
+    inserirEqui(Hash, CalculaChave(3456), c);
+    inserirEqui(Hash, CalculaChave(1456), d);
+
+    printf("%d\n", RemoveEqui(Hash, 1100));
+    printf("%d\n", RemoveEqui(Hash, 1011));
+    printf("%d\n", RemoveEqui(Hash, 1456));
+    printf("%d\n", RemoveEqui(Hash, 1100));
+    printf("%d\n", RemoveEqui(Hash, 3456));
+    printf("%d\n", Hash[0] == NULL);
+    liberaTabela(Hash);
+
+
+    int extra, chave;
+
     //limpando_buffer();
 
         extra = VerificaID();

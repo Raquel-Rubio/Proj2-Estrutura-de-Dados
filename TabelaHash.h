@@ -152,6 +152,26 @@ void ImprimeEqui (Equipamento *E[], int chave, int cod){
     }
 }
 
-//int RemovEquiHash (equipamento Hash, int numID){
-//}
+int RemoveEqui(Equipamento *tab[], int cod){
+    int chave = CalculaChave(cod);
+    Equipamento *p = tab[chave];
+    Equipamento *ant = NULL;
+
+    while(p != NULL && p->dados.CodEqui != cod){
+        ant = p;
+        p = p->prox;
+    }
+    if(p == NULL){
+        return 0;
+    }
+    if(ant  == NULL){
+        tab[chave] = p->prox;
+    } else {
+        ant->prox = p->prox;
+    }
+
+    liberaLista(p->dados.IL);
+    free(p);
+    return 1;
+}
 #endif // TABELAHASH_H_INCLUDED
