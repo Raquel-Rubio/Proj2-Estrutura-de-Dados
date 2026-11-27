@@ -62,16 +62,13 @@ int main(){
                     if(h=='\0'){
                         break;
                     }
-                    aux->info.NomeEqui[i] = h;
+                    aux->dados.NomeEqui[i] = h;
                     i++;
                 }
                 for(; i<11; i++){
-                    aux->info.NomeEqui[i] = '\0';
+                    aux->dados.NomeEqui[i] = '\0';
                 }
                 printf("\n\tNome do Equipamento informado: %s\n", aux->dados.NomeEqui);
-
-                aux->dados.IL = CriaLista();
-
                 inserirEqui(Hash, chave, aux->dados);
                 ImprimeEqui(Hash, chave, extra);
                 free(aux);
@@ -81,74 +78,72 @@ int main(){
                 printf("\nRegistrar Incidentes\n");
                 int temporario;
 
-                printf("\nPor favor insira o Código do Equipamento relacionado ao Insidente")
-                do{
-                temporario = VerificaID();
-                chave = CalculaChave(extra);
-                }while(!ExisteEqui(Hash, chave, extra));
-                temporario = VerificaNumIdem();
-
-
-
+                printf("\nPor favor insira o Código do Equipamento relacionado ao Insidente");
+                    temporario = VerificaID();
+                    Equipamento *e = BuscaEquipamento(Hash, temporario);
+                    if(e == NULL){
+                        printf("\nEquipamento não cadastrado\n");
 
                 break;
 
             case 3:
-                int encon = VerificaSoli();
+                // int encon = VerificaSoli();
 
-                AchaItemNo(L, encon);
+                // AchaItemNo(L, encon);
 
                 break;
 
             case 4:
-                int Mprio, Mperi, mudar;
-                printf("\nAlterar Prioridade e/ou Periodo:");
-                printf("\n\t1-Mudar apenas a Prioridade \n\t2-Mudar apenas o Periodo\n\t3-Mudar Prioridade e Periodo\n\n\t");
-                do{
-                    mudar = PegarInteiros();
-                }while(mudar<1 || mudar>3);
 
-                int altera = VerificaSoli();
+                        
+                // int Mprio, Mperi, mudar;
+                // printf("\nAlterar Prioridade e/ou Periodo:");
+                // printf("\n\t1-Mudar apenas a Prioridade \n\t2-Mudar apenas o Periodo\n\t3-Mudar Prioridade e Periodo\n\n\t");
+                // do{
+                //     mudar = PegarInteiros();
+                // }while(mudar<1 || mudar>3);
 
-                int Q = AchaPrioPeri(mudar, L, altera);
-                if(Q == 0){
-                    break;
-                }
-                else{
-                    switch(mudar){
-                        case 1:
-                            do{
-                                Mprio = VerificaPriori();
-                            }while(!VPInterno(Mprio, Q));
-                            Mperi = Q;
-                            break;
+                // int altera = VerificaSoli();
 
-                        case 2:
-                            Mperi = VerificaPeriodo(Q);
-                            Mprio = Q;
-                            break;
+                // int Q = AchaPrioPeri(mudar, L, altera);
+                // if(Q == 0){
+                //     break;
+                // }
+                // else{
+                //     switch(mudar){
+                //         case 1:
+                //             do{
+                //                 Mprio = VerificaPriori();
+                //             }while(!VPInterno(Mprio, Q));
+                //             Mperi = Q;
+                //             break;
 
-                        case 3:
-                            Mprio = VerificaPriori();
-                            Mperi = VerificaPeriodo(Mprio);
-                            break;
-                    }
+                //         case 2:
+                //             Mperi = VerificaPeriodo(Q);
+                //             Mprio = Q;
+                //             break;
 
-                }
+                //         case 3:
+                //             Mprio = VerificaPriori();
+                //             Mperi = VerificaPeriodo(Mprio);
+                //             break;
+                //     }
 
-                Modifica(L, altera, Mprio, Mperi);
+                // }
+
+                // Modifica(L, altera, Mprio, Mperi);
                 break;
 
             case 5:
-                OrdemManutencao(L);
-                printf("\n");
-                system("pause");
-                break;
+            //     OrdemManutencao(L);
+            //     printf("\n");
+            //     system("pause");
+            //     break;
 
-            case 6:
-                ImprimeLista(L);
-                printf("\n");
-                system("pause");
+            // case 6:
+            //     ImprimeLista(L);
+            //     printf("\n");
+            //     system("pause");
                 break;
             }
 
