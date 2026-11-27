@@ -142,4 +142,15 @@ Arv* RemovInci(Arv *a, int numID){
     return a;
 }
 
+NoArv *BuscarArv (NoArv *no, int numID){
+    while(no != NULL && numID != no->info.NumIden){
+        if(numID < no->info.NumIden){
+            no = no->esq;
+            }else{
+            no = no->dir;
+        }
+    }
+    return no;
+}
+
 #endif // ARVOREBINARIA_H_INCLUDED
