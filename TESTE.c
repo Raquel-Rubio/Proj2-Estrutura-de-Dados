@@ -10,15 +10,6 @@
 #include "TabelaHash.h"
 #include "Extra.h"
 //Funções do MAIN do proj 1
-int VerificaPriori(){
-    int verif;
-    do{
-        printf("\n\nPor favor insira o nível de Prioridade (1 a 3):   ");
-        verif = PegarInteiros();
-        limpando_buffer();
-    }while(verif<1 || verif>3);
-    return verif;
-}
 
 int VerificaPeriodo(int priori){
     int verif;

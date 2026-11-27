@@ -4,7 +4,7 @@ typedef struct incidente{
     int NumIden;
     int CodEqui;
     int Grave;
-}Incidente;
+} Incidente;
 
 typedef struct noArvore{
     Incidente info;
@@ -14,7 +14,7 @@ typedef struct noArvore{
 
 typedef struct arvore{
     NoArv *raiz;
-}Arv;
+} Arv;
 
 
 
