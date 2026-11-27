@@ -27,20 +27,45 @@ typedef struct equipamento{
 //Função Hash - MULTIPLICAÇÃO
 
 //   47*((codEqui * 0,618)%1) -> achar o menor inteiro do valor obtido
-int CalculaChave (int nome){
+int CalculaChave (int cod){
 
-    float outronome = (nome*0.618);
-    outronome = fmodf(outronome, 1);
-    outronome = outronome * 47;
+    float chave = (cod*0.618);
+    chave = fmodf(chave, 1);
+    chave = chave * 47;
 
-    return (int)outronome;
+    return (int)chave;
 }
 
-Lista* CriaLista(void){
+Lista* CriaLista(){
      Lista *l;
      l=(Lista*)malloc(sizeof(Lista));
      l->inicio = NULL;
    return l;
+}
+
+void TiraInciEqui(Lista *l, int codigoInci){
+    NoLista *aux = l->inicio;
+    NoLista *anterior = NULL;
+    while(aux!=NULL && aux->ID != codigoInci){
+        anterior = aux;
+        aux = aux->prox;
+    }
+    if(anterior == NULL){
+        l->inicio = aux->prox;
+    } else {
+        anterior->prox = aux->prox;
+    }
+
+    free(aux);
+}
+
+int HashVazia(Equipamento *E[]){
+    for(int i=0; i<M; i++){
+        if(E[i]->prox != NULL){
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void liberaLista (Lista* l)
@@ -67,48 +92,36 @@ void liberaTabela (Equipamento* E[]){ //livera tabela e a lista de incidentes de
     //free(l); da função original mas não creio ser necessário pq a tabela em si nao esta alocada
 }
 
-void inserirInci (Lista *L, int num){
+void ColocaInciEqui (Lista *L, int codInci){
     NoLista *novo = (NoLista*)malloc(sizeof(NoLista));
-    novo->ID = num;
+    novo->ID = codInci;
     novo->prox = NULL;
 
     NoLista *aux;
-    NoLista *aux2=NULL;
     aux = L ->inicio;
     while(aux!=NULL){
-        aux2 = aux;
         aux = aux->prox;
     }
 
-    novo->prox = aux;
-    if(aux2 == NULL){
-        L->inicio = novo;
-    }
-    else{
-        aux2->prox = novo;
-    }
+    aux = novo;
 }
 
 
-void inserirEqui (Equipamento *tabela[], int codigo, DadosEqui infos){
+void inserirEqui (Equipamento *tabela[], int chave, DadosEqui infos){
     Equipamento *novo = (Equipamento*)malloc(sizeof(Equipamento));
     novo->dados = infos;
+    novo->dados.IL = CriaLista();
     novo->prox = NULL;
 
-    if(tabela[codigo] == NULL){ //se a posição estiver tiver vazia vai direto
-        tabela[codigo] = novo;
-        printf("\nprimeira vez posição tabela %d equipamento = %d",codigo,tabela[codigo]->dados.CodEqui);
+    if(tabela[chave] == NULL){ //se a posição estiver tiver vazia vai direto
+        tabela[chave] = novo;
     }
-    else{ 
-        Equipamento *aux = tabela[codigo];
-
-        printf("\nEntrou no else do inserirEqui");
+    else{ //se nao cria auxiliares para achar lugar correto
+        Equipamento *aux = tabela[chave];
         while(aux->prox!= NULL){
-
             aux = aux->prox;
-            printf("\nAndou pra frente na lista encadeada do inserir equipamento");
         }
-    aux->prox = novo;
+        aux->prox=novo;
     }
 }
 
@@ -117,31 +130,13 @@ void buscaEqui(Equipamento *tabela, int cod){
 }
 
 
-/* VERIFICA��O N�O ESTA FUNCIONANDO
-int Existe (Equipamento *E[], int chave, int cod){
-
-    Equipamento *aux = E[chave];
-
-    printf("\nChegou até aqui??\n");
-    while(aux != NULL){
-        printf("\nEntrou no loop?\n\tTentando Algo %d", aux->dados.CodEqui);
-        if(aux->dados.CodEqui == cod){
-            printf("\nEsse código de equipamento ja está em uso\n");
-            return 0;
-        }
-        aux = aux->prox;
-    }
-    printf("\nChegou no final do existe\n");
-    return 1;
-}*/
-
-
 void ImprimeLista(Lista *l){
     printf("\n\nImprimir Lista Incidentes\n");
     NoLista* aux;
     aux = l->inicio;
     if (aux==NULL){
         printf("\nA lista está vazia\n");
+
     }else{
         while(aux != NULL){
             printf("l->id do incidente do equipamento: %d", aux->ID);
@@ -150,11 +145,55 @@ void ImprimeLista(Lista *l){
     }
 }
 
-void ImprimeEqui (DadosEqui infos){
+void ImprimePorCod (DadosEqui infos){
  printf("\n\nImprime dados do Equipamento");
  printf("\nCódigo do Equipamento: %d", infos.CodEqui);
-
+ printf("\nNome do Equipamento: %s", infos.NomeEqui);
+ ImprimeLista(infos.IL);
 }
 
+void ImprimeEqui (Equipamento *E[], int chave, int cod){
+    Equipamento *aux = E[chave];
+    while(aux != NULL){
+        if(aux->dados.CodEqui == cod){
+            ImprimePorCod(aux->dados);
+        }
+        aux = aux->prox;
+    }
+}
 
+int ExisteEqui (Equipamento *E[], int chave, int cod){
+    Equipamento *aux = E[chave];
+    while(aux != NULL){
+        if(aux->dados.CodEqui == cod){
+            printf("\nExiste um equipamento com esse código");
+            ImprimePorCod(aux->dados);
+            return 0;
+        }
+        aux = aux->prox;
+    }
+    return 1;
+}
+
+void InserirInciEqui(Equipamento *E[], int codEqui, int codInci){
+    int chave = CalculaChave(codEqui);
+    Equipamento *aux = E[chave];
+
+    while(aux!=NULL){
+        if(aux->dados.CodEqui == codEqui){
+           ColocaInciEqui(aux->dados.IL, codInci);
+        }
+    }
+}
+
+void ApagaInciEqui(Equipamento *E[], int codEqui, int codInci){
+    int chave = CalculaChave(codEqui);
+    Equipamento *aux = E[chave];
+
+    while(aux!=NULL){
+        if(aux->dados.CodEqui == codEqui){
+           TiraInciEqui(aux->dados.IL, codInci);
+        }
+    }
+}
 #endif // TABELAHASH_H_INCLUDED

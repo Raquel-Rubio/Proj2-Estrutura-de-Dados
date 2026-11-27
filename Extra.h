@@ -21,7 +21,7 @@ int PegarInteiros(){
 }
 
 
-char PegarCaracter(int i){ //aceita letras e numeros, na teoria
+char PegarCaracter(){ //aceita letras e numeros, na teoria
     int voltaChar=0;
     char c;
         while(voltaChar == 0){
@@ -79,4 +79,24 @@ int VerificaID(){
     return verif;
 }
 
+
+int VerificaNumIdem(){
+    int verif;
+    do{
+        printf("\nInsira o Número Único de Indentificação do Equipamento (00): ");
+        verif = PegarInteiros();
+        limpando_buffer();
+    }while(verif<10 || verif >99);
+    return verif;
+}
+
+int VerificaPriori(){
+    int verif;
+    do{
+        printf("\n\nPor favor insira o nível de Prioridade (1 a 3):   ");
+        verif = PegarInteiros();
+        limpando_buffer();
+    }while(verif<1 || verif>3);
+    return verif;
+}
 #endif // EXTRA_H_INCLUDED
