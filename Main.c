@@ -5,7 +5,6 @@
 #include <ctype.h>
 #include<windows.h>
 #include<math.h>
-//#include "Lista.h"
 #include "ArvoreBinaria.h"
 #include "TabelaHash.h"
 #include "Extra.h"
@@ -17,6 +16,7 @@ int main(){
 
     //Lista *L = CriaLista();
     Equipamento *Hash[47] = {NULL};
+    Arv* Arvore = CriaArv();
 
     while(loop != 0) {
         printf("\n\tSistema de Cadastro de Manutenção\n\n");
@@ -38,6 +38,7 @@ int main(){
 
             case 0:
                 printf("\n\n\t\tObrigado por usar nosso sistema\n\n");
+                //liberaArv(Arvore);
                 liberaTabela(Hash);
                 loop = 0;
                 break;
@@ -45,7 +46,7 @@ int main(){
             case 1:
                 printf("\nCadastrar Equipamento\n\n");
 
-                Equipamento *aux = (Equipamento*) malloc (sizeof(Equipamento));
+                Equipamento *aux = (Equipamento*)malloc(sizeof(Equipamento));
                 int extra,chave, i;
                 char h;
 
@@ -55,7 +56,7 @@ int main(){
                 }while(!ExisteEqui(Hash, chave, extra));
                 aux->dados.CodEqui = extra;
 
-                printf("\nPor favor insira o Nome do Equipamento (LLL000):   ");
+                printf("\nPor favor, insira o Nome do Equipamento:   ");
                 for(i=0; i<10; ){
                     h = PegarCaracter(1);
                     if(h=='\0'){
@@ -68,9 +69,6 @@ int main(){
                     aux->dados.NomeEqui[i] = '\0';
                 }
                 printf("\n\tNome do Equipamento informado: %s\n", aux->dados.NomeEqui);
-
-                aux->dados.IL = CriaLista();
-
                 inserirEqui(Hash, chave, aux->dados);
                 ImprimeEqui(Hash, chave, extra);
                 free(aux);

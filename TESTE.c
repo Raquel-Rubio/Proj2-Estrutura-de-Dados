@@ -94,7 +94,7 @@ int main(){
     do{
         extra = VerificaID();
        chave2 = CalculaChave(extra);
-    }while(!Existe(Hash, chave2, extra));
+    }while(!ExisteEqui(Hash, chave2, extra));
 
     printf("\nA chave foi: %d\n ", chave);
 
