@@ -79,9 +79,7 @@ printf("\nfez");
             }
         }
     }
-
-
-        printf("\nID:%d", novo->info.CodEqui);
+    printf("\nsaindo do aux_insere");
     return no;
 }
 
@@ -93,7 +91,7 @@ void InsereInci(Arv *a, Incidente incidente){
 
 NoArv* aux_RemovInci(NoArv *pai, int numID) {
     if (pai == NULL) {
-        printf("\n \n não encontrado na árvore");
+        printf("\n \n nï¿½o encontrado na ï¿½rvore");
     } else {
         if (numID > pai->info.NumIden) {
             pai->dir = aux_RemovInci(pai->dir, numID);
