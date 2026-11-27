@@ -9,8 +9,8 @@ typedef struct incidente{
 
 typedef struct NoArvore{
     Incidente info;
-    NoArv *esq;
-    NoArv *dir;
+    struct NoArvore *esq;
+    struct NoArvore *dir;
 }NoArv;
 
 typedef struct Arvore{
