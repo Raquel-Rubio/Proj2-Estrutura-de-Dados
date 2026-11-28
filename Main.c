@@ -15,7 +15,7 @@ int main(){
     int loop = 1, seletor;
 
     //Lista *L = CriaLista();
-    Equipamento *Hash[47] = {NULL};
+    Equipamento *Hash[47] = NULL;
     Arv* Arvore = CriaArv();
 
     while(loop != 0) {
@@ -84,15 +84,20 @@ int main(){
                     break;
                 }
                 printf("\nÉ necessário o Código do Equipamento relacionado ao Insidente");
+
                 do{
-                temporario = VerificaID();
-                chave2 = CalculaChave(extra);
+                    temporario = VerificaID();
+                    chave2 = CalculaChave(extra);
                 }while(ExisteEqui(Hash, chave2, extra));
                 aux2->info.CodEqui = temporario;
 
-                aux2->info.NumIden = VerificaNumIdem();
+                do{
+                    temp2 = VerificaNumIdem();
+                }while(!ExisteInci(Arvore->raiz, temp2));
+                aux2->info.NumIden = temp2;
 
                 aux2->info.Grave = VerificaPriori();
+
 
                 //colocar inserir aqui
                 //colocar impromir aqui

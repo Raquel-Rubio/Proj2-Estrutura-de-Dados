@@ -16,8 +16,6 @@ typedef struct arvore{
     NoArv *raiz;
 } Arv;
 
-
-
 Arv *CriaArv(){
     Arv *aux;
     aux = (Arv*)malloc(sizeof(Arv));
@@ -33,6 +31,23 @@ void ImprimirArv(NoArv *no) {
                no->info.NumIden, no->info.CodEqui, no->info.Grave);
         ImprimirArv(no->dir);
     }
+}
+
+int ExisteInci(NoArv *no, int cod) {
+    do{
+        if(no->info == cod){
+            return 1;
+        }else{
+            if(no->info < cod){
+                no = no->dir;
+            }else{
+                if(no->info > cod){
+                    no = no->esq;
+                }
+            }
+        }
+    }while(no!=NULL);
+    return 0;
 }
 
 // Inserir incidente
@@ -91,7 +106,7 @@ void InsereInci(Arv *a, Incidente incidente){
 
 NoArv* aux_RemovInci(NoArv *pai, int numID) {
     if (pai == NULL) {
-        printf("\n \n n�o encontrado na �rvore");
+        printf("\n \n nó encontrado na �rvore");
     } else {
         if (numID > pai->info.NumIden) {
             pai->dir = aux_RemovInci(pai->dir, numID);
@@ -140,17 +155,6 @@ Arv* RemovInci(Arv *a, int numID){
     }
     a->raiz = aux_RemovInci(a->raiz, numID);
     return a;
-}
-
-NoArv *BuscarArv (NoArv *no, int numID){
-    while(no != NULL && numID != no->info.NumIden){
-        if(numID < no->info.NumIden){
-            no = no->esq;
-            }else{
-            no = no->dir;
-        }
-    }
-    return no;
 }
 
 #endif // ARVOREBINARIA_H_INCLUDED
