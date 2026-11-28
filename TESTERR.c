@@ -29,6 +29,16 @@ int main(){
     inserirEqui(Hash, CalculaChave(3456), c);
     inserirEqui(Hash, CalculaChave(1456), d);
 
+
+    Incidente e = {12,1011,3};
+    Incidente f = {13,1011,2};
+    Incidente g = {11,1011,1};
+    Incidente h = {15,1011,2};
+    InsereInci(Arvoreee, e);
+    InsereInci(Arvoreee, f);
+    InsereInci(Arvoreee, g);
+    InsereInci(Arvoreee, h);
+
     printf("%d\n", RemoveEqui(Hash, 1100));
     printf("%d\n", RemoveEqui(Hash, 1011));
     printf("%d\n", RemoveEqui(Hash, 1456));
