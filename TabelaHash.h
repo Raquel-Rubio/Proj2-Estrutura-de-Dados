@@ -1,6 +1,6 @@
 #ifndef TABELAHASH_H_INCLUDED
 #define TABELAHASH_H_INCLUDED
-
+#include"ArvoreBinaria.h"
 #define A (0.618)
 #define M 47
 
@@ -61,15 +61,14 @@ void TiraInciEqui(Lista *l, int codigoInci){
 
 int HashVazia(Equipamento *E[]){
     for(int i=0; i<M; i++){
-        if(E[i]->prox != NULL){
-            return 1;
+        if(E[i] != NULL){
+            return 0;
         }
     }
-    return 0;
+    return 1;
 }
 
-void liberaLista (Lista* l)
-{
+void liberaLista (Lista* l){
     NoLista *aux;
     while(l->inicio!=NULL){
         aux = l->inicio;
@@ -89,21 +88,21 @@ void liberaTabela (Equipamento* E[]){ //livera tabela e a lista de incidentes de
             free(aux);
         }
     }
-    //free(l); da função original mas não creio ser necessário pq a tabela em si nao esta alocada
 }
 
 void ColocaInciEqui (Lista *L, int codInci){
     NoLista *novo = (NoLista*)malloc(sizeof(NoLista));
     novo->ID = codInci;
     novo->prox = NULL;
-
+    printf("\ndentro do inserir lista");
     NoLista *aux;
     aux = L ->inicio;
     while(aux!=NULL){
         aux = aux->prox;
     }
-
     aux = novo;
+    printf("\nID aux = %d\nID novo = %d", aux->ID, novo->ID);
+    printf("\nchegou ate o final da inserção da lista");
 }
 
 
@@ -126,7 +125,7 @@ void inserirEqui (Equipamento *tabela[], int chave, DadosEqui infos){
 }
 
 void buscaEqui(Equipamento *tabela, int cod){
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
 }
 
 
@@ -152,7 +151,8 @@ void ImprimePorCod (DadosEqui infos){
  ImprimeLista(infos.IL);
 }
 
-void ImprimeEqui (Equipamento *E[], int chave, int cod){
+void ImprimeEqui (Equipamento *E[], int cod){
+    int chave = CalculaChave(cod);
     Equipamento *aux = E[chave];
     while(aux != NULL){
         if(aux->dados.CodEqui == cod){
@@ -166,23 +166,26 @@ int ExisteEqui (Equipamento *E[], int chave, int cod){
     Equipamento *aux = E[chave];
     while(aux != NULL){
         if(aux->dados.CodEqui == cod){
-            printf("\nExiste um equipamento com esse código");
+            printf("\nExiste um equipamento com esse código\n");
             ImprimePorCod(aux->dados);
             return 0;
         }
         aux = aux->prox;
     }
+    printf("\nNão existe um equipamento com esse código\n");
     return 1;
 }
 
 void InserirInciEqui(Equipamento *E[], int codEqui, int codInci){
+    printf("\nentrou no InserirINCIEqui");
     int chave = CalculaChave(codEqui);
-    Equipamento *aux = E[chave];
-
-    while(aux!=NULL){
-        if(aux->dados.CodEqui == codEqui){
-           ColocaInciEqui(aux->dados.IL, codInci);
+    Equipamento *colocador = E[chave];
+    printf("\nCalculou chave %d, e achou o lugar na tabela", chave);
+    while(colocador!=NULL){
+        if(colocador->dados.CodEqui == codEqui){
+           ColocaInciEqui(colocador->dados.IL, codInci);
         }
+        colocador = colocador->prox;
     }
 }
 
@@ -194,7 +197,9 @@ void ApagaInciEqui(Equipamento *E[], int codEqui, int codInci){
         if(aux->dados.CodEqui == codEqui){
            TiraInciEqui(aux->dados.IL, codInci);
         }
+        aux = aux->prox;
     }
+    ImprimePorCod(aux->dados);
 }
 
 

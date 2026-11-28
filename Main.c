@@ -24,7 +24,7 @@ int main(){
         printf("Escolha o procedimento:\n\t");
         printf("1 - Cadastrar equipamento\n\t");
         printf("2 - Registrar incidente\n\t");
-        printf("3 - Consultar Equipamento e Incidente\n\t");
+        printf("3 - Consultar Equipamento e seus Incidentes\n\t");
         printf("4 - Listar todos os Incidentes\n\t");
         printf("5 - Excluir um Incidente\n\t");
         printf("6 - Excluir um Equipamento\n\t");
@@ -70,35 +70,39 @@ int main(){
                 }
                 printf("\n\tNome do Equipamento informado: %s\n", aux->dados.NomeEqui);
                 inserirEqui(Hash, chave, aux->dados);
-                ImprimeEqui(Hash, chave, extra);
+                ImprimeEqui(Hash, extra);
                 free(aux);
                 break;
 
             case 2:
                 printf("\nRegistrar Incidentes\n");
-                int temporario, temp2, chave2;
-                NoArv *aux2 = (NoArv*)malloc(sizeof(NoArv));
-
+                int caso2, temp2, chave2;
                 if(HashVazia(Hash)){
-                    printf("Não existem Equipamentos registrados nesse sistema");
+                    printf("Não existem Equipamentos registrados nesse sistema\n");
                     break;
                 }
-                printf("\nÉ necessário o Código do Equipamento relacionado ao Insidente");
+                NoArv *aux2 = (NoArv*)malloc(sizeof(NoArv));
+                printf("\nÉ necessário o Código do Equipamento relacionado ao Incidente");
                 do{
-                temporario = VerificaID();
-                chave2 = CalculaChave(extra);
-                }while(ExisteEqui(Hash, chave2, extra));
-                aux2->info.CodEqui = temporario;
+                caso2 = VerificaID();
+                chave2 = CalculaChave(caso2);
+                }while(ExisteEqui(Hash, chave2, caso2));
+                aux2->info.CodEqui = caso2;
 
-                aux2->info.NumIden = VerificaNumIdem();
+                do{
+                    temp2 = VerificaNumIdem();
+                }while(ExisteInci(Arvore->raiz, temp2));
+                aux2->info.NumIden = temp2;
 
                 aux2->info.Grave = VerificaPriori();
 
-                //colocar inserir aqui
-                //colocar impromir aqui
+                InsereInci(Arvore, aux2->info);
+                ImprimirFolha(aux2->info);
+                printf("\nVoltou pra main");
+                InserirInciEqui(Hash, caso2, temp2);
 
                 free(aux2);
-
+                system("pause");
                 break;
 
             case 3:
@@ -109,24 +113,34 @@ int main(){
                     printf("Não existem Equipamentos registrados nesse sistema");
                     break;
                 }
-                printf("\nÉ necessário o Código do Equipamento relacionado ao Insidente");
+                printf("\nInforme o código do Equipamento: ");
                 do{
                 cod = VerificaID();
-                chave3 = CalculaChave(extra);
-                }while(ExisteEqui(Hash, chave3, extra));
+                chave3 = CalculaChave(cod);
+                }while(ExisteEqui(Hash, chave3, cod));
 
-                //Arrumar a impressão para consultar a arvore ISSO NAO TA PRONTOOOO
+                ImprimeEqui(Hash, cod);
                 system("pause");
                 break;
 
             case 4:
-               printf("\nImprimir todos os incidentes em ordem crescente");
-
-               system("pause");
-               break;
+                printf("\nImprimir todos os incidentes em ordem crescente\n");
+                ImprimirArv(Arvore->raiz);
+                system("pause");
+                break;
 
             case 5:
                 printf("\nApagar um incidente");
+                int InciID;
+
+                do{
+                    InciID = VerificaNumIdem();
+                }while(ExisteInci(Arvore->raiz, InciID));
+
+                Arvore = RemovInci(Arvore, InciID, Hash);
+
+
+
                 system("pause");
                 break;
 
