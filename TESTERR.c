@@ -19,6 +19,34 @@ int main(){
     Arv* Arvoreee = CriaArv();
     //limpando_buffer();
 
+    DadosEqui a = {1011, "PC", NULL};
+    DadosEqui b = {1100, "Monitor", NULL};
+    DadosEqui c = {3456, "Mouse", NULL};
+    DadosEqui d = {1456, "Teclado", NULL};
+
+    inserirEqui(Hash, CalculaChave(1011), a);
+    inserirEqui(Hash, CalculaChave(1100), b);
+    inserirEqui(Hash, CalculaChave(3456), c);
+    inserirEqui(Hash, CalculaChave(1456), d);
+
+
+    Incidente e = {12,1011,3};
+    Incidente f = {13,1011,2};
+    Incidente g = {11,1011,1};
+    Incidente h = {15,1011,2};
+    InsereInci(Arvoreee, e);
+    InsereInci(Arvoreee, f);
+    InsereInci(Arvoreee, g);
+    InsereInci(Arvoreee, h);
+
+    printf("%d\n", RemoveEqui(Hash, 1100));
+    printf("%d\n", RemoveEqui(Hash, 1011));
+    printf("%d\n", RemoveEqui(Hash, 1456));
+    printf("%d\n", RemoveEqui(Hash, 1100));
+    printf("%d\n", RemoveEqui(Hash, 3456));
+    printf("%d\n", Hash[0] == NULL);
+    liberaTabela(Hash);
+
         extra = VerificaID();
         chave = CalculaChave(extra);
 
@@ -70,7 +98,7 @@ int main(){
     Incidente inci;
 
     inci.CodEqui = VerificaID();
-    printf("\nInsira o código");
+    printf("\nInsira o cï¿½digo");
     inci.Grave = VerificaGrav();
     inci.NumIden = VerificaNumIdem();
     printf("\nbotou os valores");

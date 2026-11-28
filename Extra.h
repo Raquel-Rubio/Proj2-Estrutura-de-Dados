@@ -82,7 +82,7 @@ char PegarLetra(){ //nao aceita espaço
 int VerificaID(){
     int verif;
     do{
-        printf("\nInsira o Código de Identificação do Equipamento:   ");
+        printf("\nInsira o Código de Identificação do Equipamento (0000):   ");
         verif = PegarInteiros();
         limpando_buffer();
     }while(verif<1000 || verif>9999);

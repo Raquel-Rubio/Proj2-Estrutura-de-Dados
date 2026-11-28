@@ -1,5 +1,6 @@
 #ifndef ARVOREBINARIA_H_INCLUDED
 #define ARVOREBINARIA_H_INCLUDED
+#include"TabelaHash.h"
 typedef struct incidente{
     int NumIden;
     int CodEqui;
@@ -23,36 +24,21 @@ Arv *CriaArv(){
     return aux;
 }
 
+void ImprimirFolha(Incidente folha){
+    printf("\nID: %d\nEquipamento: %d\nGravidade: %d\n\n", folha.NumIden, folha.CodEqui, folha.Grave);
+}
+
 //Percorrer IN-ORDER
 void ImprimirArv(NoArv *no) {
     if (no != NULL) {
         ImprimirArv(no->esq);
-        printf("ID: %d | Equipamento: %d | Gravidade: %d\n",
-               no->info.NumIden, no->info.CodEqui, no->info.Grave);
+        ImprimirFolha(no->info);
         ImprimirArv(no->dir);
     }
 }
 
-int ExisteInci(NoArv *no, int cod) {
-    do{
-        if(no->info == cod){
-            return 1;
-        }else{
-            if(no->info < cod){
-                no = no->dir;
-            }else{
-                if(no->info > cod){
-                    no = no->esq;
-                }
-            }
-        }
-    }while(no!=NULL);
-    return 0;
-}
-
 // Inserir incidente
 NoArv* Aux_insere(NoArv *no, Incidente incidente){
-printf("\nentrou");
     int flag;
     NoArv *Pai;
     NoArv *novo = (NoArv*)malloc(sizeof(NoArv));
@@ -94,38 +80,39 @@ printf("\nfez");
             }
         }
     }
-    printf("\nsaindo do aux_insere");
     return no;
 }
 
 void InsereInci(Arv *a, Incidente incidente){
-    printf("\ninsere_Inci");
         a->raiz = Aux_insere(a->raiz, incidente);
 }
 
 
-NoArv* aux_RemovInci(NoArv *pai, int numID) {
+NoArv* aux_RemovInci(NoArv *pai, int numID, Equipamento *E[]) {
     if (pai == NULL) {
-        printf("\n \n nó encontrado na �rvore");
+        printf("\n \n nó encontrado na árvore");
     } else {
         if (numID > pai->info.NumIden) {
-            pai->dir = aux_RemovInci(pai->dir, numID);
+            pai->dir = aux_RemovInci(pai->dir, numID, E);
         } else {
             if (numID < pai->info.NumIden) {
-                pai->esq = aux_RemovInci(pai->esq, numID);
+                pai->esq = aux_RemovInci(pai->esq, numID, E);
             } else {
                 if (pai->dir == NULL && pai->esq == NULL) {
+                    ApagaInciEqui(E, pai->info.CodEqui, pai->info.NumIden);
                     free(pai);
                     pai = NULL;
                 } else {
                     if (pai->esq == NULL) {
                         NoArv *aux = pai;
                         pai = pai->dir;
+                        ApagaInciEqui(E, aux->info.CodEqui, aux->info.NumIden);
                         free(aux);
                     } else {
                         if (pai->dir == NULL) {
                             NoArv *aux = pai;
                             pai = pai->esq;
+                            ApagaInciEqui(E, aux->info.CodEqui, aux->info.NumIden);
                             free(aux);
                         } else {
                             NoArv *aux;
@@ -136,7 +123,7 @@ NoArv* aux_RemovInci(NoArv *pai, int numID) {
                             Incidente temp = pai->info;
                             pai->info = aux->info;
                             aux->info = temp;
-                            pai->esq = aux_RemovInci(pai->esq, numID);
+                            pai->esq = aux_RemovInci(pai->esq, numID, E);
                         }
                     }
                 }
@@ -146,15 +133,44 @@ NoArv* aux_RemovInci(NoArv *pai, int numID) {
     return pai;
 }
 
-Arv* RemovInci(Arv *a, int numID){
+Arv* RemovInci(Arv *a, int numID, Equipamento *E[]){
     NoArv *aux = a->raiz;
     if (aux->info.NumIden == numID && aux->dir == NULL && aux->esq == NULL){
+        ApagaInciEqui(E, aux->info.CodEqui, aux->info.NumIden);
         free(aux);
         free(a);
         return NULL;
     }
-    a->raiz = aux_RemovInci(a->raiz, numID);
+    a->raiz = aux_RemovInci(a->raiz, numID, E);
     return a;
+}
+
+NoArv *BuscarArv (NoArv *no, int numID){
+    while(no != NULL && numID != no->info.NumIden){
+        if(numID < no->info.NumIden){
+            no = no->esq;
+            }else{
+            no = no->dir;
+        }
+    }
+    return no;
+}
+
+int ExisteInci(NoArv *no, int cod) {
+    while(no!=NULL){
+        if(no->info.NumIden == cod){
+            return 1;
+        }else{
+            if(no->info.NumIden < cod){
+                no = no->dir;
+            }else{
+                if(no->info.NumIden > cod){
+                    no = no->esq;
+                }
+            }
+        }
+    }
+    return 0;
 }
 
 #endif // ARVOREBINARIA_H_INCLUDED
